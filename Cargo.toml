@@ -6,6 +6,7 @@ description = "parse custom logs"
 repository = "https://github.com/rajputrajat/log_parser.git"
 license = "MIT"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
+log = "0.4.14"
+thiserror = "1.0.25"
+regex = "1.5.4"

@@ -1,3 +1,6 @@
+mod parser;
+use parser;
+
 #[cfg(test)]
 mod tests {
     #[test]
