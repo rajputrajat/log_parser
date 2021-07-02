@@ -17,9 +17,11 @@ pub(crate) enum LineSegment {
     Module(String),
     ProcessId(usize),
     ThreadId(usize),
-    LogType(LogType),
+    LogType_(LogType),
+    Message(String),
 }
 
+/// possible Log types
 pub(crate) enum LogType {
     Trace,
     Debug,
@@ -30,9 +32,21 @@ pub(crate) enum LogType {
 }
 
 /// represents a line in log
-pub(crate) struct LogLine {}
+pub(crate) struct LogLine {
+    segments: Vec<LineSegment>,
+}
 
 /// log text reader
-pub(crate) struct LogText {
-    //reader: dyn BufRead,
+pub(crate) struct LogParser {
+    reader: Box<dyn BufRead>,
+    parsed: Vec<LogLine>,
+}
+
+impl LogParser {
+    fn new(reader: Box<dyn BufRead>) -> Self {
+        Self {
+            reader,
+            parsed: vec![],
+        }
+    }
 }
