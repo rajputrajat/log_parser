@@ -2,7 +2,9 @@
 name = "log_parser"
 version = "0.1.0"
 edition = "2018"
-repository = 
+description = "parse custom logs"
+repository = "https://github.com/rajputrajat/log_parser.git"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
