@@ -1,5 +1,10 @@
+//! use of custom parser
+
+#![deny(missing_docs)]
+#![deny(unsafe_code)]
+
 mod parser;
-use parser;
+use parser::*;
 
 #[cfg(test)]
 mod tests {
