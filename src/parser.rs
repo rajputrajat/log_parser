@@ -1,6 +1,11 @@
 //! parser
 
-use async_std::io::{prelude::*, BufRead};
+use async_std::{
+    fs::File,
+    future::Future,
+    io::{self, prelude::*, BufReader},
+    path::PathBuf,
+};
 use chrono::{DateTime, Local};
 use log::debug;
 use regex::Regex;
@@ -13,6 +18,7 @@ pub(crate) struct CustomDateTime {
 
 /// a logical line segment
 pub(crate) enum LineSegment {
+    Ignore(String),
     DateTime(CustomDateTime),
     Module(String),
     ProcessId(usize),
@@ -37,16 +43,39 @@ pub(crate) struct LogLine {
 }
 
 /// log text reader
-pub(crate) struct LogParser {
-    reader: Box<dyn BufRead>,
+pub struct LogParser {
+    log_paths: Vec<PathBuf>,
+    // reader: BufReader<File>,
     parsed: Vec<LogLine>,
 }
 
+/// associated functions
 impl LogParser {
-    fn new(reader: Box<dyn BufRead>) -> Self {
+    pub fn new(log_paths: Vec<PathBuf>) -> Self {
         Self {
-            reader,
+            log_paths,
+            // reader,
             parsed: vec![],
         }
     }
+}
+
+/// public methods
+// impl LogParser {
+//     fn
+// }
+
+/// private methods
+impl LogParser {
+    async fn check_if_all_files_exist(&self) -> bool {
+        self.log_paths.iter().all(|f| async { f.exists().await })
+    }
+}
+
+#[derive(Error, Debug)]
+pub enum LogParserError {
+    #[error("file access issue")]
+    FileAccess(#[from] io::Error),
+    #[error("unknown error")]
+    Unknown,
 }
